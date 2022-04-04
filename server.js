@@ -16,7 +16,7 @@ var appData = {
     nbPixelsReplaced: 0,
     currentMap: 'blank.png',
     mapHistory: [
-        { file: 'blank.png', reason: 'Feuille blanche', date: 1648890843309 }
+        { file: 'blank.png', reason: 'Start', date: 1648890843309 }
     ]
 };
 var brandUsage = {};
@@ -54,27 +54,27 @@ app.get('/api/stats', (req, res) => {
 
 app.post('/updateorders', upload.single('image'), async (req, res) => {
     if (!req.body || !req.file || !req.body.reason || !req.body.password || req.body.password !== process.env.PASSWORD) {
-        res.send('Erreur dans le formulaire !');
+        res.send('Solicitud Incorrecta');
         fs.unlinkSync(req.file.path);
         return;
     }
 
     if (req.file.mimetype !== 'image/png') {
-        res.send('L\'image doit être un PNG !');
+        res.send('Formato de imagen incorrecto !');
         fs.unlinkSync(req.file.path);
         return;
     }
 
     getPixels(req.file.path, 'image/png', function (err, pixels) {
         if (err) {
-            res.send('Une erreur est survenue !');
+            res.send('Ha ocurrido un error!');
             console.log(err);
             fs.unlinkSync(req.file.path);
             return
         }
 
         if (pixels.data.length !== 16000000) {
-            res.send('L\'image doit etre de 2000x2000 !');
+            res.send('Tamaño de imagen incorrecto, debe ser de 2000x2000 !');
             fs.unlinkSync(req.file.path);
             return;
         }
@@ -86,7 +86,7 @@ app.post('/updateorders', upload.single('image'), async (req, res) => {
 
             const hex = rgbToHex(r, g, b);
             if (VALID_COLORS.indexOf(hex) === -1) {
-                res.send(`Le pixel ${i % 2000}, ${Math.floor(i / 2000)} comporte une couleur invalide.`);
+                res.send(`El pixel ${i % 2000}, ${Math.floor(i / 2000)} Tiene un color invalido.`);
                 fs.unlinkSync(req.file.path);
                 return;
             }
@@ -111,10 +111,10 @@ wsServer.on('connection', (socket) => {
     socket.id = socketId++;
     socket.brand = 'unknown';
     socket.lastActivity = Date.now() - (5 * 6 * 1000);
-    console.log(`[${new Date().toLocaleString()}] [+] Client connecté: ${socket.id}`);
+    console.log(`[${new Date().toLocaleString()}] [+] Cliente ${socket.id} Conectado`);
 
     socket.on('close', () => {
-        console.log(`[${new Date().toLocaleString()}] [-] Client déconnecté: ${socket.id}`);
+        console.log(`[${new Date().toLocaleString()}] [-] Client ${socket.id} Desconectado`);
     });
 
     socket.on('message', (message) => {
@@ -122,12 +122,12 @@ wsServer.on('connection', (socket) => {
         try {
             data = JSON.parse(message);
         } catch (e) {
-            socket.send(JSON.stringify({ type: 'error', data: 'Erreur lors du parsage !' }));
+            socket.send(JSON.stringify({ type: 'error', data: 'Parsing Error!' }));
             return;
         }
 
         if (!data.type) {
-            socket.send(JSON.stringify({ type: 'error', data: 'Type de données manquant !' }));
+            socket.send(JSON.stringify({ type: 'error', data: 'Missing data type!' }));
         }
 
         switch (data.type.toLowerCase()) {
@@ -150,7 +150,7 @@ wsServer.on('connection', (socket) => {
                 // console.log(`[${new Date().toLocaleString()}] Pixel placed by ${socket.id}: ${x}, ${y}: ${color}`);
                 break;
             default:
-                socket.send(JSON.stringify({ type: 'error', data: 'Commande inconnue !' }));
+                socket.send(JSON.stringify({ type: 'error', data: 'Unknown command!' }));
                 break;
         }
     });

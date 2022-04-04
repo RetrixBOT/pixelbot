@@ -1,21 +1,22 @@
 {
-  "name": "commando",
+  "name": "pixel-bot-server",
   "version": "1.0.0",
-  "description": "De centrale orderserver",
-  "main": "index.js",
+  "description": "PixelBotServer",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PlaceNL/Commando.git"
+    "url": "git+https://github.com/RetrixUY/PixelBotServer.git"
   },
-  "author": "NoahvdAa",
+  "author": "RetrixUY",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/PlaceNL/Commando/issues"
+    "url": "https://github.com/RetrixUY/PixelBotServer/issues"
   },
-  "homepage": "https://github.com/PlaceNL/Commando#readme",
+  "homepage": "https://github.com/RetrixUY/PixelBotServer#readme",
   "dependencies": {
     "dotenv": "^16.0.0",
     "express.js": "^1.0.0",
