@@ -32,7 +32,7 @@ setInterval(() => {
     console.log(`Nombres de pixels placés au total: ${appData.nbPixelsReplaced} pixels`);
 }, 120000);
 
-const server = app.listen(3987);
+const server = app.listen(process.env.PORT ?? 80);
 const wsServer = new ws.Server({ server: server, path: '/api/ws' });
 
 app.use('/maps', (req, res, next) => {
