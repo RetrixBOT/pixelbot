@@ -7,7 +7,7 @@
 // @match        https://www.reddit.com/r/place/*
 // @match        https://new.reddit.com/r/place/*
 // @connect      reddit.com
-// @connect      ocalhost:3987
+// @connect      https://brg-pixel-bot.herokuapp.com
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=reddit.com
 // @require	     https://cdn.jsdelivr.net/npm/toastify-js
 // @resource     TOASTIFY_CSS https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css
@@ -26,7 +26,7 @@ var currentOrderCtx = currentOrderCanvas.getContext('2d');
 var currentPlaceCanvas = document.createElement('canvas');
 
 // Global constants
-const BASE_URL = "localhost:3987";
+const BASE_URL = "brg-pixel-bot.herokuapp.com";
 const DEFAULT_TOAST_DURATION_MS = 10000;
 
 const COLOR_MAPPINGS = {
@@ -151,7 +151,7 @@ function connectSocket() {
                     downloadTimeoutId = undefined;
                 }
                 Toastify({
-                    text: `Descargando mapa en ${Math.floor(dlTime / 1000)} segundos...`,
+                    text: `Descargando mapa`,
                     duration: DEFAULT_TOAST_DURATION_MS
                 }).showToast();
                 downloadTimeoutId = setTimeout(async () => {
